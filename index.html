@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="shortcut icon" href="./assets/faviconfranco.png" type="image/x-icon">
+  <title>Franco Pet-Shop | Inicio</title>
+</head>
+
+
+<body class="container-fluid-p0 d-flex flex-column">
+
+  <!-- Nav -->
+  <main id="app">
+
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark fs-5" aria-label="Third navbar example">
+      <div>
+        <a href="index.html"><img class="ms-5" src="./assets/logo_franco_petshop.png" alt="logo pet-shop"
+            width="100"></a>
+      </div>
+      <div class="container-fluid">
+        <button class="ms-auto navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExample03">
+          <div class="navbar-nav d-flex container-fluid flex-wrap">
+            <ul class="navbar-nav d-flex flex-grow-1 justify-content-center">
+              <li class="nav-item">
+                <a class="nav-link fw-bold" aria-current="page" href="#">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fw-bold" href="./farmacia.html">Farmacia</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fw-bold" href="./juguetes.html">Jugueteria</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fw-bold" href="./contactenos.html">Contacto</a>
+              </li>
+            </ul>
+            <a class="canvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+              aria-controls="offcanvasRight" v-on:click="total()">
+              <i class="bi bi-cart4"></i>
+              <span class="top-0 start-100 translate-middle badge rounded-pill bg-danger" id="spanCarrito"></span>
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+    </nav>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <h3 id="offcanvasRightLabel">Carrito de Compras</h3>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column justify-content-between ">
+
+        <div class="text-center product-in-storage" v-show="storageCarrito != 0">
+
+          <table class="table table-hover">
+            <thead>
+                <th>Imagen</th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Accion</th>
+            </thead>
+            <tbody>
+              <tr v-for="producto in storageCarrito">
+                <td><img :src="producto.imagen" class="rounded-circle" alt="" width="40"></td>
+                <td class="pt-3 text-center"> {{producto.nombre}}</td>
+                <td class="pt-3 text-center"> ${{producto.precio}}</td>
+                <td class="pt-3 text-center">{{producto.cantidad}} </td>
+                <td>
+                  <div class="d-flex w-100 justify-content-evenly">
+
+                    <button class=" btn-info btn-sm" @click="agregarCarrito(producto)">
+
+                      +
+                    </button>
+                    <button class=" btn-danger btn-sm " @click="removerCarrito(producto)">
+                      -
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">Productos: {{totalEnCarrito}}</td>
+              </tr>
+
+            </tfoot>
+          </table>
+          <div id="totalFinal"></div>
+          <button type="button" class="btn btn-success canvasButton" onclick="compraRealizada()"
+            v-on:click="comprar()">Comprar</button>
+            <button v-if="storageCarrito.length>0" href="#" id="botoncinNav"
+              class="btn btn-danger canvasButton " @click="vaciarCarrito()">Vaciar</button>
+      
+          <!-- <div class="card">
+              <div class="cart-body">
+                <img :src="producto.imagen" class="card-img-top imagen-carrito" :alt="producto.nombre">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title text-wrap">{{producto.nombre}}</h5>
+                  <button v-on:click="removerCarrito(producto), contadorCantidadProductosCarrito(), total()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-trash-fill" viewBox="0 0 16 16">
+                      <path
+                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="number">
+                  <button class="minus"
+                    v-on:click="restarProductoCarrito(producto), contadorCantidadProductosCarrito(), total()">-</button>
+                  <input type="text" :id="producto._id" :value="producto.cantidad" />
+                  <button class="plus"
+                    v-on:click="sumarProductoCarrito(producto), contadorCantidadProductosCarrito(), total()">+</button>
+                </div>
+              </div>
+            </div> -->
+
+        </div>
+
+
+
+
+      </div>
+    </div>
+
+    <!-- Carrusel -->
+
+    <div id="miCarrusel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#miCarrusel" data-bs-slide-to="0" class="active" aria-current="true"
+          aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#miCarrusel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#miCarrusel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+
+      <div class="carousel-inner">
+
+        <div class="carousel-item active" data-bs-interval="5000">
+          <img src="./assets/banner_bienvenida.png" class="bannercarrusel d-block w-100" alt="...">
+        </div>
+
+        <div onclick="suscribirse()" class="suscribirse carousel-item" data-bs-interval="5000">
+          <img src="./assets/banner_cupon.png" class="bannercarrusel d-block w-100" alt="...">
+        </div>
+
+        <div class="carousel-item" data-bs-interval="5000">
+          <img src="./assets/banner_jugueteria.png" class="bannercarrusel d-block w-100" alt="...">
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#miCarrusel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#miCarrusel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Introduccion -->
+
+    <div id="fondoPerro" class="d-flex flex-column flex-wrap fondo-gris">
+
+      <div id="introduccion" class="d-flex col-5 justify-content-center">
+        <div id="bienvenidosTexto" class="">
+          <h3>¡Bienvenidos a mi Tienda!</h3>
+          <p>Somos el Pet-shop más completo de la Argentina con 20 años de experiencia; brindándoles a nuestros clientes
+            y sus mascotas la mejor atención y calidad que se merecen.</p>
+          <p>Contamos con una amplia variedad de productos para las mascotas, además del alimento balanceado de
+            reconocidas marcas, tenemos productos de higiene y belleza, juguetes, correas, collares, comederos y
+            transportadoras, entre otros.
+          <p>
+        </div>
+
+
+      </div>
+
+
+      <!-- Tarjetas -->
+
+      <div id="mistarjetas">
+        <div class="containerCards d-flex justify-content-center flex-wrap gap-5">
+          <div class="card col-md-2">
+            <img src="assets/variedad.jpg" class="imgBx" alt="...">
+            <div class="contentBx text-center">
+              <h4 class="card-title fw-bold">CALIDAD</h4>
+              <p class="card-text">Contamos con la mejor calidad de productos porque para nosotros <b>tu mascota es
+                  primero!</b></p>
+              <p><small class="text-muted">actualizado hace 25 minuto1s</small></p>
+            </div>
+          </div>
+          <div class="card col-md-2">
+            <img src="assets/atencion.webp" class="imgBx" alt="...">
+            <div class="contentBx text-center">
+              <h4 class="card-title fw-bold">ATENCIÓN</h4>
+              <p class="card-text">Te brindamos <b>atención personalizada</b> para que tengas la mejor experiencia</p>
+              <p><small class="text-muted">actualizado hace 25 minutos</small></p>
+            </div>
+          </div>
+
+          <div class="card col-md-2">
+            <img src="assets/compromiso.webp" class="imgBx" alt="...">
+            <div class="contentBx text-center">
+              <h4 class="card-title fw-bold">COMPROMISO</h4>
+              <p class="card-text">Contamos con <b>profesionales altamente capacitados</b> para la atención de su
+                mascota.
+              </p>
+              <p><small class="text-muted">actualizado hace 25 minutos</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Seccion -->
+
+    <div id="ultimaSeccion" class="container-fluid-p0 d-flex align-items-center row justify-content-center p-5">
+
+      <div id="perroAnimado" class="col-md-4">
+        <div class="dog">
+          <div class="ears"></div>
+
+          <div class="body">
+            <div class="eyes"></div>
+            <div class="beard">
+              <div class="mouth">
+                <div class="tongue"></div>
+              </div>
+            </div>
+            <div class="belt">
+              <div class="locket"></div>
+              <div class="dot dot1"></div>
+              <div class="dot dot2"></div>
+              <div class="dot dot3"></div>
+              <div class="dot dot4"></div>
+              <div class="tag"></div>
+            </div>
+            <div class="stomach">
+            </div>
+            <div class="legs">
+              <div class="left"></div>
+              <div class="right"></div>
+            </div>
+          </div>
+          <div class="tail">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="cuadro-texto">
+          <h5 class="cuadro-body-titulo">Se la persona que tu mascota cree que eres🦮</h5>
+          <p class="cuadro-body-texto">En Franco reconocemos a las mascotas como un miembro más de la familia, a las que
+            debemos
+            cuidar, proteger, y brindar el mejor cuidado para que tengan una excelente calidad de vida. </p>
+          <p class="cuadro-body-texto">Para ello ofrecemos la más amplia variedad en productos alimenticios, accesorios,
+            farmacia, y mucho más!
+          </p>
+          <p class="cuadro-body-texto">Podés visitar nuestra sucursal ubicada en Rio de Janeiro 300 (Caballito), la cual
+            cuenta con modernas y
+            cómodas instalaciones, o navegar por nuestro sitio, donde encontrarás el más amplio catálogo de productos,
+            promociones y servicios. </p>
+          <p class="cuadro-body-texto">Te esperamos</p>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Marcas-->
+
+    <div class="text-center ">
+      <h3 class="p-4 fw-bold">Trabajamos con las mejores marcas del mercado</h3>
+
+      <div class="slider">
+        <div class="slide-track">
+          <div class="marcas_slider">
+            <img src="./assets/logo_eukanuba.png" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_pedigree.png" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_purina.png" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_royalcanin.png" height="150" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_vitalcan.png" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_whiskas.png" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/log_msd.webp" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_eukanuba.png" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_pedigree.png" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_purina.png" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_royalcanin.png" height="150" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_vitalcan.png" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/logo_whiskas.png" height="100" width="250" alt="" />
+          </div>
+          <div class="marcas_slider">
+            <img src="./assets/log_msd.webp" height="100" width="250" alt="" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Mas Info -->
+
+
+  <button class="btn botoninfo" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample">
+    <i class="bi bi-chevron-up"></i> Más información <i class="bi bi-chevron-up"></i>
+  </button>
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body card-informacion">
+      <div id="masInformacion-contenedor"
+        class="container-fluid-p0 d-flex justify-content-around pt-4 pb-4 text-dark flex-wrap row">
+
+        <div class="col-lg-2">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59484.290830580394!2d-58.47134234244616!3d-34.61899526071686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca429815227f%3A0x5d302e497c2cda87!2sR%C3%ADo%20de%20Janeiro%20300%2C%20C1405CCB%20CABA!5e0!3m2!1ses-419!2sar!4v1649876918684!5m2!1ses-419!2sar"
+            class="map" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <div class="col-lg-2 extrainfo">
+          <h3>Tienda</h3>
+          <ul>
+            <li><a href="./farmacia.html">Farmacia</a></li>
+            <li><a href="./juguetes.html">Jugueteria</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 extrainfo">
+          <h3>Servicio al cliente</h3>
+          <ul>
+            <li><a class="swal-preguntas-frecuentes" onclick="preguntasFrecuentes()">Preguntas Frecuentes</a></li>
+            <li><a class="swal-atencion-al-cliente" onclick="atencionAlCliente()">Atencion al cliente</a></li>
+            <li><a class="swal-terminos-y-condiciones" onclick="terminosYCondiciones()">Terminos y condiciones</a></li>
+            <li><a class="swal-medios-de-pago" onclick="mediosDePago()">Medios de Pago</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 extrainfo">
+          <h3>Sobre Nosotros</h3>
+          <ul>
+            <li><a class="swal-quienes-somos" onclick="quienesSomos()">Quiénes Somos</a></li>
+            <li><a href="./contactenos.html">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 infocontacto d-flex flex-column ">
+          <h6>Contáctanos</h6>
+          <span class="d-flex gap-3 pb-2"><a href="https://www.facebook.com/MindHubLa/" target="_blank"><i
+                class="bi bi-facebook" style="font-size:25px"></i></a>
+            <a href="https://www.instagram.com/mindhub_la/" target="_blank"><i class="bi bi-instagram"
+                style="font-size:25px"></i></a>
+            <a href="http://www.twitter.com/mindhub" target="_blank"><i class="bi bi-twitter"
+                style="font-size:25px"></i></a></span>
+
+
+          <a href="mailto:FrancoPetShop@gmail.com">FrancoPetShop@gmail.com</a>
+          <a href="tel:+5491124966463">+54 9 11 2496-6463</a>
+          <p>Rio de Janeiro 300, Buenos Aires, Argentina</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="d-flex align-items-center justify-content-around p-2 flex-wrap">
+    <p class="ps-5">&copy;Franco Pet-Shop 2022 - Todos los derechos reservados</p>
+    <div>
+      <img id="mp" src="assets/mercadopago1.png" alt="mercado pago" width="100">
+      <img src="assets/uala2.png" alt="mercado pago" width="100">
+      <img id="dataFiscal" src="./assets/Datafiscal.jpg" alt="data fiscal" width="50">
+    </div>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="./scripts/main.js"></script>
+  <script src="./scripts/sweetAlert.js"></script>
+</body>
+
+</html>

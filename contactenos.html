@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="shortcut icon" href="./assets/faviconfranco.png" type="image/x-icon">
+  <title>Franco Pet-Shop | Contacto </title>
+</head>
+
+<body class="container-fluid-p0 d-flex flex-column">
+
+  <main id="app">
+
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark fs-5" aria-label="Third navbar example">
+      <div>
+        <a href="index.html"><img class="ms-5" src="./assets/logo_franco_petshop.png" alt="logo pet-shop"
+            width="100"></a>
+      </div>
+      <div class="container-fluid">
+        <button class="ms-auto navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExample03">
+          <div class="navbar-nav d-flex container-fluid flex-wrap">
+            <ul class="navbar-nav d-flex flex-grow-1 justify-content-center">
+              <li class="nav-item">
+                <a class="nav-link fw-bold" aria-current="page" href="./index.html">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fw-bold" href="./farmacia.html">Farmacia</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fw-bold" href="./juguetes.html">Jugueteria</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fw-bold" href="#">Contacto</a>
+              </li>
+              <li class="nav-item dropdown li-drop" v-on:click="total()">
+                <a class="nav-link dropdown-toggle" id="dropdown4" data-bs-toggle="dropdown" data-bs-auto-close="false"
+                  aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                    fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
+                    <path
+                      d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+                  </svg><span class="top-0 start-100 translate-middle badge rounded-pill bg-danger" id="spanCarrito">
+                  </span></a>
+                <div class="dropdown-menu dropdown-menu-end text-center product-in-storage" aria-labelledby="dropwdown4"
+                  v-show="storageCarrito != 0">
+                  <div v-for="producto in storageCarrito" class="dropdown-item text-start">
+                    <div class="card">
+                      <div class="cart-body">
+                        <img :src="producto.imagen" class="card-img-top imagen-carrito" :alt="producto.nombre">
+                        <div class="d-flex justify-content-between">
+                          <h5 class="card-title text-wrap">{{producto.nombre}}</h5>
+                          <button v-on:click="removerCarrito(producto), contadorCantidadProductosCarrito(), total()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                              class="bi bi-trash-fill" viewBox="0 0 16 16">
+                              <path
+                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                            </svg>
+                          </button>
+                        </div>
+                        <div class="number">
+                          <button class="minus"
+                            v-on:click="restarProductoCarrito(producto), contadorCantidadProductosCarrito(), total()">-</button>
+                          <input type="text" :id="producto._id" :value="producto.cantidad" />
+                          <button class="plus"
+                            v-on:click="sumarProductoCarrito(producto), contadorCantidadProductosCarrito(), total()">+</button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div id="totalFinal"></div>
+                  <button type="button" class="btn btn-success p-2" onclick="compraRealizada()"
+                    v-on:click="comprar()">Comprar</button>
+                </div>
+
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </nav>
+
+    <div class="width-form">
+      <form class="row g-3 m-5">
+        <div class="mb-3 p-2 bg-light border row align-items-start">
+          <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label ml-5 ">Nombre</label>
+            <input type="text" id="fname" name="fname" class="form-control" id="exampleFormControlInput1"
+              placeholder="Nombre" required>
+          </div>
+          <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">Apellido</label>
+            <input type="text" type="text" id="lname" name="lname" class="form-control" id="exampleFormControlInput1"
+              placeholder="Apellido">
+          </div>
+          <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label ">Nro. de Telefono</label>
+            <input type="tel" id="tel" name="tel" class="form-control w-50" id="exampleFormControlInput1"
+              placeholder="+54 9 112424-2525" required>
+          </div>
+          <div class="col-12">
+            <label for="exampleFormControlInput1" class="form-label">Direccion de E-mail</label>
+            <input type="email" class="form-control w-50" id="exampleFormControlInput1" placeholder="nombre@mail.com">
+          </div>
+          <div class="col-md-4 d-flex flex-column w-75">
+            <label for="tipoDeMascota" class="form-label m-2">Que tipo de mascota tenes?</label>
+            <div class="d-flex flex-wrap">
+              <select id="tipoDeMascota" class="form-select w-50">
+                <option selected>Perro</option>
+                <option>Gato</option>
+                <option>Loro</option>
+                <option>Coballo</option>
+                <option>Otro</option>
+              </select>
+              <input type="text" style="margin-left: 5px" name="otroTipoDeMascota" id="otroTipoDeMascota"
+                placeholder="¿Otro?">
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="exampleFormControlTextarea1" class="form-label">Dejanos tu consulta</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+
+          <div class="col-8 m-2 l-5 frame">
+            <button class="custom-btn btn-3"><span>Enviar Consulta</span></button>
+            <!-- <button type="submit" class="btn btn-primary">Enviar consulta</button> -->
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+
+
+  </main>
+  <!-- Mas Info -->
+
+
+  <button id="masInformacion-boton" class="btn text-center botoninfo" type="button" data-bs-toggle="collapse"
+    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    <i class="bi bi-chevron-up"></i> Más información <i class="bi bi-chevron-up"></i>
+  </button>
+  <div class="collapse" id="collapseExample">
+    <div class="card cart-body card-informacion">
+      <div id="masInformacion-contenedor"
+        class="container-fluid-p0 d-flex justify-content-around pt-4 pb-4 text-dark flex-wrap row">
+
+        <div class="col-lg-2">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59484.290830580394!2d-58.47134234244616!3d-34.61899526071686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca429815227f%3A0x5d302e497c2cda87!2sR%C3%ADo%20de%20Janeiro%20300%2C%20C1405CCB%20CABA!5e0!3m2!1ses-419!2sar!4v1649876918684!5m2!1ses-419!2sar"
+            class="map" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <div class="col-lg-2 extrainfo">
+          <h3>Tienda</h3>
+          <ul>
+            <li><a href="./farmacia.html">Farmacia</a></li>
+            <li><a href="./juguetes.html">Jugueteria</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 extrainfo">
+          <h3>Servicio al cliente</h3>
+          <ul>
+            <li><a class="swal-preguntas-frecuentes" onclick="preguntasFrecuentes()">Preguntas Frecuentes</a></li>
+            <li><a class="swal-atencion-al-cliente" onclick="atencionAlCliente()">Atencion al cliente</a></li>
+            <li><a class="swal-terminos-y-condiciones" onclick="terminosYCondiciones()">Terminos y condiciones</a></li>
+            <li><a class="swal-medios-de-pago" onclick="mediosDePago()">Medios de Pago</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 extrainfo">
+          <h3>Sobre Nosotros</h3>
+          <ul>
+            <li><a class="swal-quienes-somos" onclick="quienesSomos()">Quiénes Somos</a></li>
+            <li><a href="./contactenos.html">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 infocontacto d-flex flex-column container">
+          <h6>Contáctanos</h6>
+          <span class="d-flex gap-3 pb-2"><a href="https://www.facebook.com/MindHubLa/" target="_blank"><i
+                class="bi bi-facebook" style="font-size:25px"></i></a>
+            <a href="https://www.instagram.com/mindhub_la/" target="_blank"><i class="bi bi-instagram"
+                style="font-size:25px"></i></a>
+            <a href="http://www.twitter.com/mindhub" target="_blank"><i class="bi bi-twitter"
+                style="font-size:25px"></i></a></span>
+
+          <a href="mailto:FrancoPetShop@gmail.com">FrancoPetShop@gmail.com</a>
+          <a href="tel:+5491124966463">+54 9 11 2496-6463</a>
+          <p>Rio de Janeiro 300, Buenos Aires, Argentina</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="d-flex align-items-center justify-content-around p-2 flex-wrap">
+    <p class="ps-5">&copy;Franco Pet-Shop 2022 - Todos los derechos reservados</p>
+    <div>
+      <img id="mp" src="assets/mercadopago1.png" alt="mercado pago" width="100">
+      <img src="assets/uala2.png" alt="mercado pago" width="100">
+      <img id="dataFiscal" src="./assets/Datafiscal.jpg" alt="data fiscal" width="50">
+    </div>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="./scripts/main.js"></script>
+  <script src="./scripts/sweetAlert.js"></script>
+</body>
+
+</html>
