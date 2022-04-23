@@ -45,55 +45,73 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link fw-bold" href="#">Contacto</a>
-              </li>
-              <li class="nav-item dropdown li-drop" v-on:click="total()">
-                <a class="nav-link dropdown-toggle" id="dropdown4" data-bs-toggle="dropdown" data-bs-auto-close="false"
-                  aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                    fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
-                    <path
-                      d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
-                  </svg><span class="top-0 start-100 translate-middle badge rounded-pill bg-danger" id="spanCarrito">
-                  </span></a>
-                <div class="dropdown-menu dropdown-menu-end text-center product-in-storage" aria-labelledby="dropwdown4"
-                  v-show="storageCarrito != 0">
-                  <div v-for="producto in storageCarrito" class="dropdown-item text-start">
-                    <div class="card">
-                      <div class="cart-body">
-                        <img :src="producto.imagen" class="card-img-top imagen-carrito" :alt="producto.nombre">
-                        <div class="d-flex justify-content-between">
-                          <h5 class="card-title text-wrap">{{producto.nombre}}</h5>
-                          <button v-on:click="removerCarrito(producto), contadorCantidadProductosCarrito(), total()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                              class="bi bi-trash-fill" viewBox="0 0 16 16">
-                              <path
-                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                            </svg>
-                          </button>
-                        </div>
-                        <div class="number">
-                          <button class="minus"
-                            v-on:click="restarProductoCarrito(producto), contadorCantidadProductosCarrito(), total()">-</button>
-                          <input type="text" :id="producto._id" :value="producto.cantidad" />
-                          <button class="plus"
-                            v-on:click="sumarProductoCarrito(producto), contadorCantidadProductosCarrito(), total()">+</button>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                  <div id="totalFinal"></div>
-                  <button type="button" class="btn btn-success p-2" onclick="compraRealizada()"
-                    v-on:click="comprar()">Comprar</button>
-                </div>
-
-              </li>
-            </ul>
+              </li>            </ul>
+              <a class="canvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight" v-on:click="total()">
+                <i class="bi bi-cart4"></i>
+                <span class="top-0 start-100 translate-middle badge rounded-pill bg-danger" id="spanCarrito"></span>
+              </a>
+  
+            </div>
           </div>
         </div>
+  
+      </nav>
+  
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+          <h3 id="offcanvasRightLabel">Carrito de Compras</h3>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column justify-content-between ">
+  
+          <div class="text-center product-in-storage" v-show="storageCarrito != 0">
+  
+            <table class="table table-hover">
+              <thead>
+                  <th>Imagen</th>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                  <th>Accion</th>
+              </thead>
+              <tbody>
+                <tr v-for="producto in storageCarrito">
+                  <td><img :src="producto.imagen" class="rounded-circle" alt="" width="40"></td>
+                  <td class="pt-3 text-center"> {{producto.nombre}}</td>
+                  <td class="pt-3 text-center"> ${{producto.precio}}</td>
+                  <td class="pt-3 text-center">{{producto.cantidad}} </td>
+                  <td>
+                    <div class="d-flex w-100 justify-content-evenly">
+  
+                      <button class=" btn-info btn-sm" @click="agregarCarrito(producto)">
+  
+                        +
+                      </button>
+                      <button class=" btn-danger btn-sm " @click="removerCarrito(producto)">
+                        -
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2">Total Productos: {{totalEnCarrito}}</td>
+                </tr>
+  
+              </tfoot>
+            </table>
+            <div id="totalFinal"></div>
+            <button type="button" class="btn btn-success canvasButton" onclick="compraRealizada()"
+              v-on:click="comprar()">Comprar</button>
+              <button v-if="storageCarrito.length>0" href="#" id="botoncinNav"
+                class="btn btn-danger canvasButton " @click="vaciarCarrito()">Vaciar</button>
+  
+          </div>
+  
+        </div>
       </div>
-      </div>
-      </div>
-    </nav>
 
     <div class="width-form">
       <form class="row g-3 m-5">

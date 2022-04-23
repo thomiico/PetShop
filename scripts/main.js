@@ -166,14 +166,14 @@ Vue.createApp({
             let index = this.juguetes.findIndex(prod => prod._id == producto._id);
             
             this.productosID = this.stockProductosEnStorage
-            if (this.productosID.includes(producto._id)) {
+            if (!this.productosID.includes(producto._id)) {
                 this.storageCarrito.pop(producto)
                 localStorage.setItem("favs", JSON.stringify(this.storageCarrito))
             } else{
                 // SI EL OBJETO PRODUCTO TIENE CANTIDAD MAYOR A 1, SE DECREMENTA UNO.
-                if (producto.cantidad > 1) {
-                    producto.cantidad--
-                    producto.stock++
+                if (this.storageCarrito.cantidad > 1) {
+                    this.storageCarrito.cantidad--
+                    this.storageCarrito.stock++
                     this.juguetes[index].stock++
                 }
             }
@@ -265,10 +265,24 @@ Vue.createApp({
 
             this.totalEnCarrito = this.stockProductosEnStorage.map(prod => prod.cantidad).reduce((a, b) => a + b, 0)
             localStorage.clear()
-            location.reload()
+            
             // localStorage.setItem("carrito", JSON.stringify(this.productosEnCarrito))
-            Swal.fire('Se ha vaciado el carrito con exito')
-        }
+            
+            const toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 750,
+                timerProgressBar: true,
+              })
+            
+              toast.fire({
+                icon: 'success',
+                title: 'Ha vaciado su carrito'
+              }).then(() => {location.reload()})
+            
+            }
+        
     },
 
 }).mount("#app")

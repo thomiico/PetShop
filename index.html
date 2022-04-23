@@ -100,7 +100,7 @@
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="2">Productos: {{totalEnCarrito}}</td>
+                <td colspan="2">Total Productos: {{totalEnCarrito}}</td>
               </tr>
 
             </tfoot>
@@ -110,34 +110,8 @@
             v-on:click="comprar()">Comprar</button>
             <button v-if="storageCarrito.length>0" href="#" id="botoncinNav"
               class="btn btn-danger canvasButton " @click="vaciarCarrito()">Vaciar</button>
-      
-          <!-- <div class="card">
-              <div class="cart-body">
-                <img :src="producto.imagen" class="card-img-top imagen-carrito" :alt="producto.nombre">
-                <div class="d-flex justify-content-between">
-                  <h5 class="card-title text-wrap">{{producto.nombre}}</h5>
-                  <button v-on:click="removerCarrito(producto), contadorCantidadProductosCarrito(), total()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-trash-fill" viewBox="0 0 16 16">
-                      <path
-                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                    </svg>
-                  </button>
-                </div>
-                <div class="number">
-                  <button class="minus"
-                    v-on:click="restarProductoCarrito(producto), contadorCantidadProductosCarrito(), total()">-</button>
-                  <input type="text" :id="producto._id" :value="producto.cantidad" />
-                  <button class="plus"
-                    v-on:click="sumarProductoCarrito(producto), contadorCantidadProductosCarrito(), total()">+</button>
-                </div>
-              </div>
-            </div> -->
 
         </div>
-
-
-
 
       </div>
     </div>
